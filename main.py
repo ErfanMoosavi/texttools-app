@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, HTTPException
 from openai import OpenAI
 from texttools.models import ToolOutput
 
@@ -19,14 +19,27 @@ tool = None
 
 @app.post("/configuration", status_code=status.HTTP_201_CREATED)
 def create_config(config: Config):
-    client = OpenAI(api_key=config.api_key, base_url=config.base_url)
-    global tool
-    tool = TheTool(client=client, model=config.model)
-    return {"message": "Created TheTool successfully"}
+    try:
+        client = OpenAI(api_key=config.api_key, base_url=config.base_url)
+        global tool
+        tool = TheTool(client=client, model=config.model)
+        return {"message": "Created TheTool successfully"}
+
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @app.post("/process", status_code=status.HTTP_200_OK)
-def process(request: ProcessRequest) -> ToolOutput:
-    method = getattr(tool, request.operation)
-    output = method(request.text)
-    return output
+def create_output(request: ProcessRequest) -> ToolOutput:
+    if not tool:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Set configs first"
+        )
+
+    try:
+        method = getattr(tool, request.operation)
+        output = method(request.text)
+        return output
+
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
