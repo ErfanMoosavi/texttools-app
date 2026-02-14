@@ -1,0 +1,10 @@
+[project]
+name = "texttools-app"
+version = "0.1.0"
+description = "A FastAPI web app for texttools"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.129.0",
+    "hamtaa-texttools>=2.3.4",
+]
