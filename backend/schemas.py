@@ -11,11 +11,6 @@ class Config(BaseModel):
 
 class ProcessRequest(BaseModel):
     operation: Literal[
-        "categorize",
-        "extract_keywords",
-        "extract_entities",
-        "is_question",
-        "to_question",
-        "merge_questions",
+        "extract_keywords", "extract_entities", "is_question", "to_question"
     ]
-    text: list[str] | str
+    text: str
