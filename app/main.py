@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from .config import settings
+from .routers import tool_routes
 
 
 app = FastAPI(
@@ -10,3 +11,5 @@ app = FastAPI(
     contact=settings.contact,
     license_info=settings.license_info,
 )
+
+app.include_router(tool_routes)
