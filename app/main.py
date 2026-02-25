@@ -7,7 +7,7 @@ from .routes import tool_routes
 
 
 @asynccontextmanager
-def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI):
     # Startup
     yield
     # Shutdown
