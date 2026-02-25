@@ -5,7 +5,7 @@ description = "A simple API for TextTools"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "fastapi[standard]==0.129.0",
-    "hamtaa-texttools>=2.3.4",
+    "fastapi[standard]==0.133.0",
+    "hamtaa-texttools>=2.8.0",
     "pydantic-settings>=2.12.0",
 ]
