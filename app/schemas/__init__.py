@@ -1,4 +1,4 @@
-from .schemas import (
+from .request import (
     AugmentReq,
     CategorizeReq,
     ExtractEntitiesReq,
