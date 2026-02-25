@@ -7,4 +7,5 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]==0.129.0",
     "hamtaa-texttools>=2.3.4",
+    "pydantic-settings>=2.12.0",
 ]
