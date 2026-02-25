@@ -1,7 +1,7 @@
 [project]
 name = "texttools-app"
 version = "0.1.0"
-description = "A FastAPI web app for texttools"
+description = "A simple API for TextTools"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
