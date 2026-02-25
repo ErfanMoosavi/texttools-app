@@ -21,7 +21,7 @@ from ..schemas import (
 router = APIRouter(prefix="/tools", tags=["tools"])
 
 
-@router.post("/categorize", response_model=ToolRes)
+@router.post("/categorizations", response_model=ToolRes)
 async def categorize(req: CategorizeReq, tool: AsyncTheTool = Depends(get_tool)):
     try:
         result = await tool.categorize(
@@ -38,7 +38,7 @@ async def categorize(req: CategorizeReq, tool: AsyncTheTool = Depends(get_tool))
         )
 
 
-@router.post("/extract_keywords", response_model=ToolRes)
+@router.post("/keyword-extractions", response_model=ToolRes)
 async def extract_keywords(
     req: ExtractKeywordsReq, tool: AsyncTheTool = Depends(get_tool)
 ):
@@ -59,7 +59,7 @@ async def extract_keywords(
         )
 
 
-@router.post("/extract_entities", response_model=ToolRes)
+@router.post("/entity-extractions", response_model=ToolRes)
 async def extract_entities(
     req: ExtractEntitiesReq, tool: AsyncTheTool = Depends(get_tool)
 ):
@@ -79,7 +79,7 @@ async def extract_entities(
         )
 
 
-@router.post("/is_question", response_model=ToolRes)
+@router.post("/question-detections", response_model=ToolRes)
 async def is_question(req: IsQuestionReq, tool: AsyncTheTool = Depends(get_tool)):
     try:
         result = await tool.is_question(
@@ -95,7 +95,7 @@ async def is_question(req: IsQuestionReq, tool: AsyncTheTool = Depends(get_tool)
         )
 
 
-@router.post("/to_question", response_model=ToolRes)
+@router.post("/question-generations", response_model=ToolRes)
 async def to_question(req: ToQuestionReq, tool: AsyncTheTool = Depends(get_tool)):
     try:
         result = await tool.to_question(
@@ -114,7 +114,7 @@ async def to_question(req: ToQuestionReq, tool: AsyncTheTool = Depends(get_tool)
         )
 
 
-@router.post("/merge_questions", response_model=ToolRes)
+@router.post("/question-merges", response_model=ToolRes)
 async def merge_questions(
     req: MergeQuestionsReq, tool: AsyncTheTool = Depends(get_tool)
 ):
@@ -134,7 +134,7 @@ async def merge_questions(
         )
 
 
-@router.post("/augment", response_model=ToolRes)
+@router.post("/augmentations", response_model=ToolRes)
 async def augment(req: AugmentReq, tool: AsyncTheTool = Depends(get_tool)):
     try:
         result = await tool.augment(
@@ -152,7 +152,7 @@ async def augment(req: AugmentReq, tool: AsyncTheTool = Depends(get_tool)):
         )
 
 
-@router.post("/summarize", response_model=ToolRes)
+@router.post("/summaries", response_model=ToolRes)
 async def summarize(req: SummarizeReq, tool: AsyncTheTool = Depends(get_tool)):
     try:
         result = await tool.summarize(
@@ -169,7 +169,7 @@ async def summarize(req: SummarizeReq, tool: AsyncTheTool = Depends(get_tool)):
         )
 
 
-@router.post("/translate", response_model=ToolRes)
+@router.post("/translations", response_model=ToolRes)
 async def translate(req: TranslateReq, tool: AsyncTheTool = Depends(get_tool)):
     try:
         result = await tool.translate(
@@ -188,7 +188,7 @@ async def translate(req: TranslateReq, tool: AsyncTheTool = Depends(get_tool)):
         )
 
 
-@router.post("/propositionize", response_model=ToolRes)
+@router.post("/propositions", response_model=ToolRes)
 async def propositionize(
     req: PropositionizeReq, tool: AsyncTheTool = Depends(get_tool)
 ):
@@ -207,7 +207,7 @@ async def propositionize(
         )
 
 
-@router.post("/is_fact", response_model=ToolRes)
+@router.post("/fact-checks", response_model=ToolRes)
 async def is_fact(req: IsFactReq, tool: AsyncTheTool = Depends(get_tool)):
     try:
         result = await tool.is_fact(
