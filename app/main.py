@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 
 from .config import settings
-from .routers import tool_routes
-
+from .routes import tool_routes
 
 app = FastAPI(
     title=settings.title,
