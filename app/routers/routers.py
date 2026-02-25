@@ -30,7 +30,7 @@ async def categorize(req: CategorizeReq, tool: AsyncTheTool = Depends(get_tool))
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/extract_keywords", response_model=ToolRes)
@@ -46,7 +46,7 @@ async def extract_keywords(
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/extract_entities", response_model=ToolRes)
@@ -61,7 +61,7 @@ async def extract_entities(
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/is_question", response_model=ToolRes)
@@ -72,7 +72,7 @@ async def is_question(req: IsQuestionReq, tool: AsyncTheTool = Depends(get_tool)
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/to_question", response_model=ToolRes)
@@ -86,7 +86,7 @@ async def to_question(req: ToQuestionReq, tool: AsyncTheTool = Depends(get_tool)
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/merge_questions", response_model=ToolRes)
@@ -101,7 +101,7 @@ async def merge_questions(
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/augment", response_model=ToolRes)
@@ -114,7 +114,7 @@ async def augment(req: AugmentReq, tool: AsyncTheTool = Depends(get_tool)):
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/summarize", response_model=ToolRes)
@@ -126,7 +126,7 @@ async def summarize(req: SummarizeReq, tool: AsyncTheTool = Depends(get_tool)):
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/translate", response_model=ToolRes)
@@ -140,7 +140,7 @@ async def translate(req: TranslateReq, tool: AsyncTheTool = Depends(get_tool)):
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/propositionize", response_model=ToolRes)
@@ -154,7 +154,7 @@ async def propositionize(
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
 
 
 @router.post("/is_fact", response_model=ToolRes)
@@ -167,4 +167,4 @@ async def is_fact(req: IsFactReq, tool: AsyncTheTool = Depends(get_tool)):
         user_prompt=req.user_prompt,
         temperature=req.temperature,
     )
-    return result
+    return ToolRes(output=result)
