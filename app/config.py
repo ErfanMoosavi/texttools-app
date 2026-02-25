@@ -12,5 +12,15 @@ class Settings(BaseSettings):
     }
     license_info: dict[str, str] = {"name": "MIT"}
 
+    # LLM API settings
+    base_url: str
+    api_key: str
+    llm_model: str
+
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+        case_sensitive = False
+
 
 settings = Settings()
