@@ -5,18 +5,15 @@ from texttools import AsyncTheTool
 from ..dependencies import get_tool
 from ..schemas import (
     AugmentReq,
-    BoolRes,
     CategorizeReq,
     ExtractEntitiesReq,
     ExtractKeywordsReq,
     IsFactReq,
     IsQuestionReq,
-    ListDictRes,
-    ListStrRes,
     MergeQuestionsReq,
     PropositionizeReq,
-    StrRes,
     SummarizeReq,
+    ToolRes,
     ToQuestionReq,
     TranslateReq,
 )
@@ -24,7 +21,7 @@ from ..schemas import (
 router = APIRouter(prefix="/tools", tags=["tools"])
 
 
-@router.post("/categorize", response_model=StrRes)
+@router.post("/categorize", response_model=ToolRes)
 async def categorize(req: CategorizeReq, tool: AsyncTheTool = Depends(get_tool)):
     result = await tool.categorize(
         text=req.text,
@@ -36,7 +33,7 @@ async def categorize(req: CategorizeReq, tool: AsyncTheTool = Depends(get_tool))
     return result
 
 
-@router.post("/extract_keywords", response_model=ListStrRes)
+@router.post("/extract_keywords", response_model=ToolRes)
 async def extract_keywords(
     req: ExtractKeywordsReq, tool: AsyncTheTool = Depends(get_tool)
 ):
@@ -52,7 +49,7 @@ async def extract_keywords(
     return result
 
 
-@router.post("/extract_entities", response_model=ListDictRes)
+@router.post("/extract_entities", response_model=ToolRes)
 async def extract_entities(
     req: ExtractEntitiesReq, tool: AsyncTheTool = Depends(get_tool)
 ):
@@ -67,7 +64,7 @@ async def extract_entities(
     return result
 
 
-@router.post("/is_question", response_model=BoolRes)
+@router.post("/is_question", response_model=ToolRes)
 async def is_question(req: IsQuestionReq, tool: AsyncTheTool = Depends(get_tool)):
     result = await tool.is_question(
         text=req.text,
@@ -78,7 +75,7 @@ async def is_question(req: IsQuestionReq, tool: AsyncTheTool = Depends(get_tool)
     return result
 
 
-@router.post("/to_question", response_model=ListStrRes)
+@router.post("/to_question", response_model=ToolRes)
 async def to_question(req: ToQuestionReq, tool: AsyncTheTool = Depends(get_tool)):
     result = await tool.to_question(
         text=req.text,
@@ -92,7 +89,7 @@ async def to_question(req: ToQuestionReq, tool: AsyncTheTool = Depends(get_tool)
     return result
 
 
-@router.post("/merge_questions", response_model=StrRes)
+@router.post("/merge_questions", response_model=ToolRes)
 async def merge_questions(
     req: MergeQuestionsReq, tool: AsyncTheTool = Depends(get_tool)
 ):
@@ -107,7 +104,7 @@ async def merge_questions(
     return result
 
 
-@router.post("/augment", response_model=StrRes)
+@router.post("/augment", response_model=ToolRes)
 async def augment(req: AugmentReq, tool: AsyncTheTool = Depends(get_tool)):
     result = await tool.augment(
         text=req.text,
@@ -120,7 +117,7 @@ async def augment(req: AugmentReq, tool: AsyncTheTool = Depends(get_tool)):
     return result
 
 
-@router.post("/summarize", response_model=StrRes)
+@router.post("/summarize", response_model=ToolRes)
 async def summarize(req: SummarizeReq, tool: AsyncTheTool = Depends(get_tool)):
     result = await tool.summarize(
         text=req.text,
@@ -132,7 +129,7 @@ async def summarize(req: SummarizeReq, tool: AsyncTheTool = Depends(get_tool)):
     return result
 
 
-@router.post("/translate", response_model=StrRes)
+@router.post("/translate", response_model=ToolRes)
 async def translate(req: TranslateReq, tool: AsyncTheTool = Depends(get_tool)):
     result = await tool.translate(
         text=req.text,
@@ -146,7 +143,7 @@ async def translate(req: TranslateReq, tool: AsyncTheTool = Depends(get_tool)):
     return result
 
 
-@router.post("/propositionize", response_model=ListStrRes)
+@router.post("/propositionize", response_model=ToolRes)
 async def propositionize(
     req: PropositionizeReq, tool: AsyncTheTool = Depends(get_tool)
 ):
@@ -160,7 +157,7 @@ async def propositionize(
     return result
 
 
-@router.post("/is_fact", response_model=BoolRes)
+@router.post("/is_fact", response_model=ToolRes)
 async def is_fact(req: IsFactReq, tool: AsyncTheTool = Depends(get_tool)):
     result = await tool.is_fact(
         text=req.text,

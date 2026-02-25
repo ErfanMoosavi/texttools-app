@@ -1,17 +1,6 @@
 from pydantic import BaseModel
+from texttools.models import ToolOutput
 
 
-class StrRes(BaseModel):
-    result: str
-
-
-class BoolRes(BaseModel):
-    result: bool
-
-
-class ListStrRes(BaseModel):
-    result: list[str]
-
-
-class ListDictRes(BaseModel):
-    result: list[dict[str, str]]
+class ToolRes(BaseModel):
+    output: ToolOutput

@@ -11,7 +11,7 @@ from .request import (
     ToQuestionReq,
     TranslateReq,
 )
-from .response import BoolRes, ListDictRes, ListStrRes, StrRes
+from .response import ToolRes
 
 __all__ = [
     # Request models
@@ -26,9 +26,6 @@ __all__ = [
     "SummarizeReq",
     "ToQuestionReq",
     "TranslateReq",
-    # Response models
-    "BoolRes",
-    "ListDictRes",
-    "ListStrRes",
-    "StrRes",
+    # Response model
+    "ToolRes",
 ]
