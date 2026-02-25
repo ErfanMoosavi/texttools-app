@@ -22,4 +22,10 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+
+@app.get("/")
+async def root():
+    return {"message": "Welcome to TextTools API", "version": settings.version}
+
+
 app.include_router(tool_routes)
