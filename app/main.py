@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
 
 from .config import settings
 from .routes import tool_routes
@@ -22,10 +23,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+templates = Jinja2Templates(directory="templates")
+
 
 @app.get("/")
-async def root():
-    return {"message": "Welcome to TextTools API", "version": settings.version}
+async def root(jinja2_req: Request):
+    return templates.TemplateResponse(jinja2_req, "home.html")
 
 
 app.include_router(tool_routes)
