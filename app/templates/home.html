@@ -1,65 +1,10 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TextTools API</title>
-  </head>
-
-  <body>
-    <header>
-      <h1>TextTools API</h1>
-      <p>A collection of AI-powered text processing tools.</p>
-    </header>
-
-    <main>
-      <h2>Available Tools</h2>
-      <ul>
-        <li>
-          <strong>Categorize</strong> – Classify text into predefined
-          categories.
-        </li>
-        <li>
-          <strong>Extract Keywords</strong> – Extract key terms and phrases.
-        </li>
-        <li>
-          <strong>Extract Entities</strong> – Identify named entities (people,
-          places, etc.).
-        </li>
-        <li>
-          <strong>Is Question</strong> – Detect if a text is phrased as a
-          question.
-        </li>
-        <li>
-          <strong>Generate Questions</strong> – Create questions from a text or
-          subject.
-        </li>
-        <li>
-          <strong>Merge Questions</strong> – Combine multiple questions into
-          one.
-        </li>
-        <li>
-          <strong>Augment</strong> – Rewrite text in different styles (positive,
-          negative, etc.).
-        </li>
-        <li><strong>Summarize</strong> – Generate a concise summary.</li>
-        <li><strong>Translate</strong> – Translate text between languages.</li>
-        <li>
-          <strong>Propositionize</strong> – Break text into atomic propositions
-          (experimental).
-        </li>
-        <li>
-          <strong>Is Fact</strong> – Verify a statement against a source text
-          (experimental).
-        </li>
-      </ul>
-    </main>
-
-    <footer>
-      <p>
-        Powered by <a href="https://fastapi.tiangolo.com/">FastAPI</a> and
-        <a href="https://github.com/openai/openai-python">OpenAI</a>.
-      </p>
-    </footer>
-  </body>
-</html>
+{% extends "base.html" %} {% block title %}Home - TextTools{% endblock %} {%
+block content %}
+<h1>Welcome to TextTools</h1>
+<p>Select a tool from the navigation menu to get started.</p>
+<p>
+  TextTools provides various NLP functionalities including categorization,
+  keyword extraction, translation - and more!
+</p>
+<p>All tools are powered by AI and easy to use.</p>
+{% endblock %}

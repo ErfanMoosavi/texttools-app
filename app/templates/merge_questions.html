@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Merge Questions - TextTools{% endblock %}
+
+{% block extra_head %}
+<style>
+    .mode-options { margin: 1rem 0; }
+    .mode-options label { display: inline-block; margin-right: 1rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Merge Questions</h1>
+<p>Combine multiple questions into one.</p>
+
+<form id="mergeQuestionsForm">
+    <div>
+        <label>Questions:</label>
+        <div id="questionsContainer" class="categories-container">
+            <div class="category-input">
+                <input type="text" class="question-text" placeholder="Enter a question" required>
+                <button type="button" class="remove-category" onclick="removeQuestion(this)">✕</button>
+            </div>
+        </div>
+        <button type="button" class="add-category" onclick="addQuestion()">+ Add Question</button>
+    </div>
+
+    <div class="mode-options">
+        <label>Merge Mode:</label><br>
+        <label><input type="radio" name="mode" value="simple" checked> Simple</label>
+        <label><input type="radio" name="mode" value="stepwise"> Stepwise</label>
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" id="withAnalysis" name="with_analysis">
+            Include analysis
+        </label>
+    </div>
+
+    <div>
+        <label for="output_lang">Output language (optional):</label>
+        <input type="text" id="output_lang" name="output_lang" placeholder="e.g., English, Spanish">
+    </div>
+
+    <div>
+        <label for="temperature">Temperature (0-2):</label>
+        <input type="number" id="temperature" name="temperature" step="0.1" min="0" max="2" value="0.0">
+    </div>
+
+    <div>
+        <label for="userPrompt">Custom prompt (optional):</label>
+        <input type="text" id="userPrompt" name="user_prompt" placeholder="Additional instructions">
+    </div>
+
+    <button type="submit">Merge Questions</button>
+    <div id="loading" class="loading">Processing...</div>
+</form>
+
+<div id="result" class="result" style="display: none;">
+    <h2>Result:</h2>
+    <pre id="output"></pre>
+</div>
+
+<script>
+    function addQuestion() {
+        const container = document.getElementById('questionsContainer');
+        const div = document.createElement('div');
+        div.className = 'category-input';
+        div.innerHTML = `
+            <input type="text" class="question-text" placeholder="Enter a question" required>
+            <button type="button" class="remove-category" onclick="removeQuestion(this)">✕</button>
+        `;
+        container.appendChild(div);
+    }
+
+    function removeQuestion(btn) {
+        const container = document.getElementById('questionsContainer');
+        if (container.children.length > 1) {
+            btn.parentElement.remove();
+        } else {
+            alert('You need at least one question.');
+        }
+    }
+
+    document.getElementById('mergeQuestionsForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const questionInputs = document.querySelectorAll('.question-text');
+        const text = [];
+        questionInputs.forEach(input => {
+            if (input.value.trim()) text.push(input.value.trim());
+        });
+        if (text.length === 0) {
+            alert('Please enter at least one question.');
+            return;
+        }
+        const mode = document.querySelector('input[name="mode"]:checked').value;
+        const payload = {
+            text: text,
+            mode: mode,
+            with_analysis: document.getElementById('withAnalysis').checked,
+            output_lang: document.getElementById('output_lang').value || null,
+            temperature: parseFloat(document.getElementById('temperature').value),
+            user_prompt: document.getElementById('userPrompt').value || null
+        };
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('result').style.display = 'none';
+        try {
+            const response = await fetch('/tools/question-merges', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById('output').textContent = JSON.stringify(data.output, null, 2);
+                document.getElementById('result').style.display = 'block';
+            } else {
+                alert('Error: ' + (data.detail || 'Unknown error'));
+            }
+        } catch (error) {
+            alert('Network error: ' + error.message);
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

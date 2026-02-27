@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Extract Entities - TextTools{% endblock %}
+
+{% block content %}
+<h1>Extract Entities</h1>
+<p>Extract specific entities from your text.</p>
+
+<form id="entitiesForm">
+    <div>
+        <label for="text">Text:</label>
+        <textarea id="text" name="text" required placeholder="Enter your text here..."></textarea>
+    </div>
+
+    <div>
+        <label>Entity types to extract:</label>
+        <div id="entitiesContainer" class="categories-container">
+            <div class="category-input">
+                <input type="text" class="entity" placeholder="Entity type (e.g., PERSON, ORGANIZATION)" required value="all named entities">
+                <button type="button" class="remove-category" onclick="removeEntity(this)">✕</button>
+            </div>
+        </div>
+        <button type="button" class="add-category" onclick="addEntity()">+ Add Entity Type</button>
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" id="withAnalysis" name="with_analysis">
+            Include analysis
+        </label>
+    </div>
+
+    <div>
+        <label for="output_lang">Output language (optional):</label>
+        <input type="text" id="output_lang" name="output_lang" placeholder="e.g., English, Spanish">
+    </div>
+
+    <div>
+        <label for="temperature">Temperature (0-2):</label>
+        <input type="number" id="temperature" name="temperature" step="0.1" min="0" max="2" value="0.0">
+    </div>
+
+    <div>
+        <label for="userPrompt">Custom prompt (optional):</label>
+        <input type="text" id="userPrompt" name="user_prompt" placeholder="Additional instructions">
+    </div>
+
+    <button type="submit">Extract Entities</button>
+    <div id="loading" class="loading">Processing...</div>
+</form>
+
+<div id="result" class="result" style="display: none;">
+    <h2>Result:</h2>
+    <pre id="output"></pre>
+</div>
+
+<script>
+    function addEntity() {
+        const container = document.getElementById('entitiesContainer');
+        const div = document.createElement('div');
+        div.className = 'category-input';
+        div.innerHTML = `
+            <input type="text" class="entity" placeholder="Entity type" required>
+            <button type="button" class="remove-category" onclick="removeEntity(this)">✕</button>
+        `;
+        container.appendChild(div);
+    }
+
+    function removeEntity(btn) {
+        const container = document.getElementById('entitiesContainer');
+        if (container.children.length > 1) {
+            btn.parentElement.remove();
+        } else {
+            alert('You need at least one entity type.');
+        }
+    }
+
+    document.getElementById('entitiesForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const entityInputs = document.querySelectorAll('.entity');
+        const entities = [];
+        entityInputs.forEach(input => {
+            if (input.value.trim()) entities.push(input.value.trim());
+        });
+        if (entities.length === 0) {
+            alert('Please enter at least one entity type.');
+            return;
+        }
+        const payload = {
+            text: document.getElementById('text').value,
+            entities: entities,
+            with_analysis: document.getElementById('withAnalysis').checked,
+            output_lang: document.getElementById('output_lang').value || null,
+            temperature: parseFloat(document.getElementById('temperature').value),
+            user_prompt: document.getElementById('userPrompt').value || null
+        };
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('result').style.display = 'none';
+        try {
+            const response = await fetch('/tools/entity-extractions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById('output').textContent = JSON.stringify(data.output, null, 2);
+                document.getElementById('result').style.display = 'block';
+            } else {
+                alert('Error: ' + (data.detail || 'Unknown error'));
+            }
+        } catch (error) {
+            alert('Network error: ' + error.message);
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

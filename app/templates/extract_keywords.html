@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Extract Keywords - TextTools{% endblock %}
+
+{% block extra_head %}
+<style>
+    .mode-options { margin: 1rem 0; }
+    .mode-options label { display: inline-block; margin-right: 1rem; }
+    .count-field { display: none; margin-top: 0.5rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Extract Keywords</h1>
+<p>Extract keywords from your text.</p>
+
+<form id="keywordsForm">
+    <div>
+        <label for="text">Text:</label>
+        <textarea id="text" name="text" required placeholder="Enter your text here..."></textarea>
+    </div>
+
+    <div class="mode-options">
+        <label>Mode:</label><br>
+        <label><input type="radio" name="mode" value="auto" checked> Auto</label>
+        <label><input type="radio" name="mode" value="threshold"> Threshold</label>
+        <label><input type="radio" name="mode" value="count"> Count</label>
+    </div>
+
+    <div id="countField" class="count-field">
+        <label for="number_of_keywords">Number of keywords:</label>
+        <input type="number" id="number_of_keywords" name="number_of_keywords" min="1" value="5">
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" id="withAnalysis" name="with_analysis">
+            Include analysis
+        </label>
+    </div>
+
+    <div>
+        <label for="output_lang">Output language (optional):</label>
+        <input type="text" id="output_lang" name="output_lang" placeholder="e.g., English, Spanish">
+    </div>
+
+    <div>
+        <label for="temperature">Temperature (0-2):</label>
+        <input type="number" id="temperature" name="temperature" step="0.1" min="0" max="2" value="0.0">
+    </div>
+
+    <div>
+        <label for="userPrompt">Custom prompt (optional):</label>
+        <input type="text" id="userPrompt" name="user_prompt" placeholder="Additional instructions">
+    </div>
+
+    <button type="submit">Extract Keywords</button>
+    <div id="loading" class="loading">Processing...</div>
+</form>
+
+<div id="result" class="result" style="display: none;">
+    <h2>Result:</h2>
+    <pre id="output"></pre>
+</div>
+
+<script>
+    document.querySelectorAll('input[name="mode"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('countField').style.display = this.value === 'count' ? 'block' : 'none';
+        });
+    });
+
+    document.getElementById('keywordsForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const mode = document.querySelector('input[name="mode"]:checked').value;
+        const payload = {
+            text: document.getElementById('text').value,
+            mode: mode,
+            number_of_keywords: mode === 'count' ? parseInt(document.getElementById('number_of_keywords').value) : null,
+            with_analysis: document.getElementById('withAnalysis').checked,
+            output_lang: document.getElementById('output_lang').value || null,
+            temperature: parseFloat(document.getElementById('temperature').value),
+            user_prompt: document.getElementById('userPrompt').value || null
+        };
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('result').style.display = 'none';
+        try {
+            const response = await fetch('/tools/keyword-extractions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById('output').textContent = JSON.stringify(data.output, null, 2);
+                document.getElementById('result').style.display = 'block';
+            } else {
+                alert('Error: ' + (data.detail || 'Unknown error'));
+            }
+        } catch (error) {
+            alert('Network error: ' + error.message);
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

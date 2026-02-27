@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}NLP Toolkit{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    <nav class="top-nav">
+      <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle tools menu">☰</button>
+      <span class="brand">TextTools</span>
+      <a href="/">Home</a>
+    </nav>
+
+    <div class="main-layout">
+      <aside class="sidebar closed" id="sidebar">
+        <a href="/categorize">Categorize</a>
+        <a href="/extract-keywords">Keywords</a>
+        <a href="/extract-entities">Entities</a>
+        <a href="/is-question">Is Question?</a>
+        <a href="/to-question">To Question</a>
+        <a href="/merge-questions">Merge Questions</a>
+        <a href="/augment">Augment</a>
+        <a href="/summarize">Summarize</a>
+        <a href="/translate">Translate</a>
+        <a href="/propositionize">Propositionize</a>
+        <a href="/fact-check">Fact Check</a>
+      </aside>
+
+      <div class="container">{% block content %}{% endblock %}</div>
+    </div>
+
+    <footer>
+      TextTools has been developed by <a href="https://hamtaa.org/" target="_blank" rel="noopener noreferrer">Hamtaa AI</a>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleBtn.addEventListener('click', function() {
+          sidebar.classList.toggle('closed');
+        });
+      });
+    </script>
+  </body>
+</html>
