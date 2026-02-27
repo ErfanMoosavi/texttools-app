@@ -4,17 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}NLP Toolkit{% endblock %}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
     {% block extra_head %}{% endblock %}
   </head>
   <body>
     <nav class="top-nav">
-      <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle tools menu">☰</button>
+      <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        type="button"
+        aria-label="Toggle tools menu"
+      >
+        ☰
+      </button>
       <span class="brand">TextTools</span>
       <a href="/">Home</a>
+      <button
+        id="themeToggle"
+        class="theme-toggle"
+        type="button"
+        aria-label="Toggle dark mode"
+      >
+        🌙
+      </button>
     </nav>
 
     <div class="main-layout">
@@ -36,18 +54,44 @@
     </div>
 
     <footer>
-      TextTools has been developed by <a href="https://hamtaa.org/" target="_blank" rel="noopener noreferrer">Hamtaa AI</a>
+      TextTools has been developed by
+      <a href="https://hamtaa.org/" target="_blank" rel="noopener noreferrer"
+        >Hamtaa AI</a
+      >
     </footer>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const toggleBtn = document.getElementById('sidebarToggle');
-        const sidebar = document.getElementById('sidebar');
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtn = document.getElementById("sidebarToggle");
+        const sidebar = document.getElementById("sidebar");
 
-        toggleBtn.addEventListener('click', function() {
-          sidebar.classList.toggle('closed');
+        toggleBtn.addEventListener("click", function () {
+          sidebar.classList.toggle("closed");
         });
       });
     </script>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("themeToggle");
+
+    // Load saved theme
+    if (localStorage.getItem("theme") === "dark") {
+      document.documentElement.classList.add("dark");
+      toggle.textContent = "☀️";
+    }
+
+    toggle.addEventListener("click", function () {
+      document.documentElement.classList.toggle("dark");
+
+      if (document.documentElement.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        toggle.textContent = "☀️";
+      } else {
+        localStorage.setItem("theme", "light");
+        toggle.textContent = "🌙";
+      }
+    });
+  });
+</script>
   </body>
 </html>

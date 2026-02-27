@@ -5,17 +5,13 @@
 }
 
 body {
-  font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
-  background: linear-gradient(135deg, #f4f0ff 0%, #e9eef7 100%);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-gradient);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  color: #1f2b40;
+  color: var(--text-primary);
   line-height: 1.5;
 }
 
@@ -564,4 +560,64 @@ footer a:hover {
 .home-hero p {
   margin-left: auto;
   margin-right: auto;
+}
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #f4f0ff 0%, #e9eef7 100%);
+  --text-primary: #1f2b40;
+  --text-secondary: #374151;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --container-bg: rgba(255, 255, 255, 0.55);
+}
+
+/* ================= DARK MODE ================= */
+
+.dark {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #111827 100%);
+  --text-primary: #e5e7eb;
+  --text-secondary: #cbd5e1;
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --container-bg: rgba(30, 41, 59, 0.75);
+}
+
+/* Make text adapt */
+.dark p {
+  color: var(--text-secondary);
+}
+
+/* Cards */
+.dark .home-feature-card,
+.dark .sidebar,
+.dark .top-nav,
+.dark .container,
+.dark .result {
+  background: var(--container-bg);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Inputs */
+.dark textarea,
+.dark input,
+.dark select {
+  background: rgba(51, 65, 85, 0.6);
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Footer */
+.dark footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
 }
