@@ -1,10 +1,37 @@
 {% extends "base.html" %} {% block title %}Home - TextTools{% endblock %} {%
 block content %}
-<h1>Welcome to TextTools</h1>
-<p>Select a tool from the navigation menu to get started.</p>
-<p>
-  TextTools provides various NLP functionalities including categorization,
-  keyword extraction, translation - and more!
-</p>
-<p>All tools are powered by AI and easy to use.</p>
+<div class="home-hero">
+  <h1>Welcome to TextTools</h1>
+  <p>Select a tool from the navigation menu to get started.</p>
+
+  <section class="home-features">
+    <div class="home-features-grid">
+      <article class="home-feature-card">
+        <div class="home-feature-icon" aria-hidden="true">🚀</div>
+        <h3 class="home-feature-title">Easy to Use</h3>
+        <p class="home-feature-text">
+          Select your tool, then process your text. Nothing else!
+        </p>
+      </article>
+
+      <article class="home-feature-card">
+        <div class="home-feature-icon" aria-hidden="true">🛠️</div>
+        <h3 class="home-feature-title">10+ NLP Tools</h3>
+        <p class="home-feature-text">
+          From categorization and keyword extraction to translation and fact
+          checking!
+        </p>
+      </article>
+
+      <article class="home-feature-card">
+        <div class="home-feature-icon" aria-hidden="true">📊</div>
+        <h3 class="home-feature-title">Production Ready</h3>
+        <p class="home-feature-text">
+          Production-tested tools with structured outputs, token tracking, and
+          metadata!
+        </p>
+      </article>
+    </div>
+  </section>
+</div>
 {% endblock %}
