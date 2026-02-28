@@ -15,7 +15,6 @@ body {
   line-height: 1.5;
 }
 
-/* Top navigation */
 .top-nav {
   max-width: 1400px;
   width: 100%;
@@ -58,7 +57,7 @@ body {
   box-shadow: 0 4px 10px -4px rgba(79, 70, 229, 0.2);
 }
 
-/* Ultra-minimal sidebar toggle - completely flat */
+/* Sidebar Toggle */
 .sidebar-toggle {
   background: transparent !important;
   border: none !important;
@@ -100,7 +99,7 @@ body {
   transition: gap 0.3s ease;
 }
 
-/* Sidebar - collapsible */
+/* Sidebar */
 .sidebar {
   width: 260px;
   flex-shrink: 0;
@@ -282,7 +281,7 @@ button:hover {
   font-weight: 500;
 }
 
-/* ----- Category grid and remove button (perfectly aligned) ----- */
+/* Category grid and remove button */
 .categories-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -295,7 +294,7 @@ button:hover {
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  min-width: 0; /* Prevents flex items from overflowing */
+  min-width: 0;
 }
 
 .category-input input {
@@ -304,12 +303,11 @@ button:hover {
   padding: 0 1rem;
   margin: 0;
   font-size: 0.95rem;
-  line-height: 40px; /* Match height for vertical centering */
+  line-height: 40px;
 }
 
-/* Red remove button - perfectly aligned with input */
 .remove-category {
-  width: 40px; /* Match input height */
+  width: 40px;
   height: 40px;
   border-radius: 8px;
   background: #ef4444;
@@ -326,7 +324,7 @@ button:hover {
   transition: all 0.15s ease;
   line-height: 1;
   margin: 0;
-  flex-shrink: 0; /* Prevents button from shrinking */
+  flex-shrink: 0;
 }
 
 .remove-category:hover {
@@ -439,13 +437,13 @@ footer a:hover {
   }
 }
 
-/* ---------- Home features (drop into your existing style.css) ---------- */
-/* Scoped to avoid interfering with other components */
+/* Home features */
 .home-features {
-  margin-top: 2rem;
+  margin-top: 5rem;
+  margin-left: 2;
+  margin-left: 2;
 }
 
-/* Grid: 3 columns on desktop, 2 on medium, 1 on mobile */
 .home-features-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -454,7 +452,6 @@ footer a:hover {
   margin-top: 1.5rem;
 }
 
-/* Feature card base */
 .home-feature-card {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(10px);
@@ -473,7 +470,6 @@ footer a:hover {
   min-height: 170px;
 }
 
-/* Hover / focus effect (keyboard accessible) */
 .home-feature-card:hover,
 .home-feature-card:focus-within {
   transform: translateY(-6px);
@@ -485,32 +481,18 @@ footer a:hover {
   );
 }
 
-/* Icon circle */
-.home-feature-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.35rem;
-  background: linear-gradient(135deg, #f0efff 0%, #f9f5ff 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    0 6px 18px -8px rgba(79, 70, 229, 0.08);
-  flex-shrink: 0;
-  align-self: center;
-}
-
 /* Title & text */
 .home-feature-title {
-  font-size: 1.05rem;
-  margin: 0;
-  color: #1f2b40;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  align-self: center;
-}
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      background: linear-gradient(90deg, #818cf8, #c084fc, #f9a8d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    
 
 .home-feature-text {
   margin: 0;
@@ -518,38 +500,12 @@ footer a:hover {
   color: #374151;
   line-height: 1.45;
   margin-top: 0.25rem;
-  flex: 1; /* keep cards equal height by pushing text to fill space */
+  flex: 1;
   align-self: center;
 }
 
-/* Accessibility: make the card keyboard-focusable if needed */
 .home-feature-card[tabindex] {
   outline: none;
-}
-
-/* Responsive breakpoints */
-@media (max-width: 1100px) {
-  .home-features-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 700px) {
-  .home-features-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .home-feature-card {
-    padding: 1.25rem;
-    min-height: auto;
-  }
-
-  .home-feature-icon {
-    width: 48px;
-    height: 48px;
-    font-size: 1.15rem;
-    align-self: center;
-  }
 }
 
 .home-hero {
@@ -570,8 +526,7 @@ footer a:hover {
   --container-bg: rgba(255, 255, 255, 0.55);
 }
 
-/* ================= DARK MODE ================= */
-
+/* Dark Mode*/
 .dark {
   --bg-gradient: linear-gradient(135deg, #0f172a 0%, #111827 100%);
   --text-primary: #e5e7eb;
