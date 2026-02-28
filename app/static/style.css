@@ -5,7 +5,11 @@
 }
 
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   background: var(--bg-gradient);
   min-height: 100vh;
   display: flex;
@@ -208,7 +212,7 @@ label {
   display: block;
   margin-bottom: 0.5rem;
   color: #2d3a5e;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -483,16 +487,15 @@ footer a:hover {
 
 /* Title & text */
 .home-feature-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      background: linear-gradient(90deg, #818cf8, #c084fc, #f9a8d4);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-    }
-    
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  background: linear-gradient(90deg, #818cf8, #c084fc, #f9a8d4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
 
 .home-feature-text {
   margin: 0;
@@ -535,6 +538,37 @@ footer a:hover {
   --container-bg: rgba(30, 41, 59, 0.75);
 }
 
+/* Sidebar */
+.dark .sidebar a {
+  display: block;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.75rem 1.2rem;
+  border-radius: 30px;
+  transition: all 0.2s ease;
+  margin-bottom: 0.25rem;
+}
+
+.dark .sidebar a:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: #4f46e5;
+  transform: translateX(5px);
+  box-shadow: 0 4px 10px -4px rgba(79, 70, 229, 0.15);
+}
+
+/* Label*/
+.dark label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #8c939c;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 /* Make text adapt */
 .dark p {
   color: var(--text-secondary);
@@ -550,13 +584,21 @@ footer a:hover {
   border-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Inputs */
 .dark textarea,
-.dark input,
+.dark input:not([type="checkbox"]):not([type="radio"]),
 .dark select {
+  display: block;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.3rem;
   background: rgba(51, 65, 85, 0.6);
-  color: #f1f5f9;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(57, 69, 85, 0.6);
+  border-radius: 28px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #8c939c;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
 /* Footer */
@@ -564,6 +606,8 @@ footer a:hover {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+
+/* Theme Toggle */
 .theme-toggle {
   margin-left: auto;
   background: transparent;
