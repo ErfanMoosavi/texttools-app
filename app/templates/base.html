@@ -71,27 +71,27 @@
       });
     </script>
     <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const toggle = document.getElementById("themeToggle");
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggle = document.getElementById("themeToggle");
 
-    // Load saved theme
-    if (localStorage.getItem("theme") === "dark") {
-      document.documentElement.classList.add("dark");
-      toggle.textContent = "☀️";
-    }
+        // Load saved theme
+        if (localStorage.getItem("theme") === "dark") {
+          document.documentElement.classList.add("dark");
+          toggle.textContent = "☀️";
+        }
 
-    toggle.addEventListener("click", function () {
-      document.documentElement.classList.toggle("dark");
+        toggle.addEventListener("click", function () {
+          document.documentElement.classList.toggle("dark");
 
-      if (document.documentElement.classList.contains("dark")) {
-        localStorage.setItem("theme", "dark");
-        toggle.textContent = "☀️";
-      } else {
-        localStorage.setItem("theme", "light");
-        toggle.textContent = "🌙";
-      }
-    });
-  });
-</script>
+          if (document.documentElement.classList.contains("dark")) {
+            localStorage.setItem("theme", "dark");
+            toggle.textContent = "☀️";
+          } else {
+            localStorage.setItem("theme", "light");
+            toggle.textContent = "🌙";
+          }
+        });
+      });
+    </script>
   </body>
 </html>

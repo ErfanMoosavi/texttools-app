@@ -19,6 +19,18 @@ body {
   line-height: 1.5;
 }
 
+/* Main layout with sidebar and content */
+.main-layout {
+  display: flex;
+  gap: 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto 2rem auto;
+  flex: 1;
+  transition: gap 0.3s ease;
+}
+
+/* Navigation */
 .top-nav {
   max-width: 1400px;
   width: 100%;
@@ -90,17 +102,6 @@ body {
 
 .sidebar-toggle:focus {
   outline: none;
-}
-
-/* Main layout with sidebar and content */
-.main-layout {
-  display: flex;
-  gap: 2rem;
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto 2rem auto;
-  flex: 1;
-  transition: gap 0.3s ease;
 }
 
 /* Sidebar */
@@ -285,162 +286,6 @@ button:hover {
   font-weight: 500;
 }
 
-/* Category grid and remove button */
-.categories-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.category-input {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  min-width: 0;
-}
-
-.category-input input {
-  flex: 1;
-  height: 40px;
-  padding: 0 1rem;
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 40px;
-}
-
-.remove-category {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: #ef4444;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.3);
-  transition: all 0.15s ease;
-  line-height: 1;
-  margin: 0;
-  flex-shrink: 0;
-}
-
-.remove-category:hover {
-  background: #dc2626;
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(220, 38, 38, 0.4);
-}
-
-.remove-category:active {
-  transform: scale(0.95);
-}
-
-.add-category {
-  background: #10b981;
-  color: white;
-  border: none;
-  padding: 0.5rem 1.2rem;
-  border-radius: 40px;
-  font-weight: 500;
-  font-size: 0.9rem;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  margin-bottom: 2rem;
-  display: inline-block;
-  width: auto;
-  box-shadow: 0 4px 10px -4px rgba(16, 185, 129, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.add-category:hover {
-  background: #059669;
-  transform: translateY(-2px);
-}
-
-/* Checkbox style */
-input[type="checkbox"] {
-  width: 1.2rem;
-  height: 1.2rem;
-  accent-color: #4f46e5;
-  vertical-align: middle;
-  margin-right: 0.75rem;
-}
-
-label:has(> input[type="checkbox"]) {
-  display: inline-flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-  text-transform: none;
-  color: #1f2b40;
-  cursor: pointer;
-}
-
-/* Loading indicator */
-.loading {
-  display: none;
-  margin-top: 1rem;
-  color: #4f46e5;
-  font-weight: 500;
-  text-align: center;
-}
-
-footer {
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  padding: 1.5rem 0;
-  font-size: 0.9rem;
-  color: #4c5a7a;
-  border-top: 1px solid rgba(79, 70, 229, 0.2);
-}
-
-footer a {
-  color: #4f46e5;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
-}
-
-footer a:hover {
-  color: #7c3aed;
-  text-decoration: underline;
-}
-
-@media (max-width: 900px) {
-  body {
-    padding: 1rem;
-  }
-  .main-layout {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-  }
-  .sidebar.closed {
-    width: 0;
-    padding: 0;
-  }
-  .container {
-    padding: 2rem;
-  }
-  h1 {
-    font-size: 2.4rem;
-  }
-
-  /* Adjust category grid for mobile */
-  .categories-container {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* Home features */
 .home-features {
   margin-top: 5rem;
@@ -519,6 +364,135 @@ footer a:hover {
 .home-hero p {
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Category grid and remove button */
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.category-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.category-input input {
+  flex: 1;
+  height: 40px;
+  padding: 0 1rem;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 40px;
+}
+
+.remove-category {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #ef4444;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.3);
+  transition: all 0.15s ease;
+  line-height: 1;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.remove-category:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(220, 38, 38, 0.4);
+}
+
+.remove-category:active {
+  transform: scale(0.95);
+}
+
+.add-category {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 40px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  display: inline-block;
+  width: auto;
+  box-shadow: 0 4px 10px -4px rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.add-category:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
+/* Checkbox style */
+input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: #4f46e5;
+  vertical-align: middle;
+  margin-right: 0.75rem;
+}
+
+label:has(> input[type="checkbox"]) {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  text-transform: none;
+  color: #1f2b40;
+  cursor: pointer;
+}
+
+/* Loading indicator */
+.loading {
+  display: none;
+  margin-top: 1rem;
+  color: #4f46e5;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Footer */
+footer {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 1.5rem 0;
+  font-size: 0.9rem;
+  color: #4c5a7a;
+  border-top: 1px solid rgba(79, 70, 229, 0.2);
+}
+
+footer a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+footer a:hover {
+  color: #7c3aed;
+  text-decoration: underline;
 }
 
 :root {
@@ -605,7 +579,6 @@ footer a:hover {
 .dark footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 
 /* Theme Toggle */
 .theme-toggle {
