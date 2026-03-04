@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from .config import settings
-from .routes import tool_routes
+from .routes import router as routes
 
 
 @asynccontextmanager
@@ -88,4 +88,4 @@ async def fact_check_page(request: Request):
     return templates.TemplateResponse("fact_check.html", {"request": request})
 
 
-app.include_router(tool_routes)
+app.include_router(routes)

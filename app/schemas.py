@@ -1,5 +1,7 @@
-from pydantic import BaseModel, Field
 from typing import Literal
+
+from pydantic import BaseModel, Field
+from texttools.models import ToolOutput
 
 
 class BaseToolReq(BaseModel):
@@ -88,3 +90,7 @@ class PropositionizeReq(BaseToolWithLangReq):
 
 class IsFactReq(BaseToolWithLangReq):
     source_text: str = Field(..., description="Source text to check against")
+
+
+class ToolRes(BaseModel):
+    output: ToolOutput

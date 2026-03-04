@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from texttools import AsyncTheTool
 
-from ..dependencies import get_tool
-from ..schemas import (
+from .dependencies import get_tool
+from .schemas import (
     AugmentReq,
     CategorizeReq,
     ExtractEntitiesReq,
