@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}Categorize - TextTools{% endblock %}
+
+{% block content %}
+<div class="tool-header">
+  <h1>Categorize Text</h1>
+  <p class="tool-description">Classify your text into custom categories. Enter categories as a comma-separated list.</p>
+</div>
+
+<form class="tool-form" id="categorizeForm" method="POST" action="/tools/categorizations">
+  <div class="form-group">
+    <label for="text">Text to categorize</label>
+    <textarea id="text" name="text" rows="6" placeholder="Enter your text here..." required></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="categories">Categories <span class="help-text">(comma-separated)</span></label>
+    <input type="text" id="categories" name="categories" placeholder="e.g., Technology, Sports, Health" required>
+  </div>
+
+  <div class="advanced-toggle-wrapper">
+    <button type="button" id="advancedToggle" class="btn-advanced">▼ Advanced Settings</button>
+  </div>
+
+  <div class="advanced-panel" id="advancedPanel" style="display: none;">
+    <div class="settings-row">
+      <div class="settings-box">
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" id="with_analysis" name="with_analysis">
+            Include analysis
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-box">
+        <div class="slider-group">
+          <label for="temperature">Temperature <span id="tempValue">0.0</span></label>
+          <input type="range" id="temperature" name="temperature" min="0" max="2" step="0.1" value="0">
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-box full-width">
+      <div class="form-group">
+        <label for="user_prompt">Custom prompt (optional)</label>
+        <input type="text" id="user_prompt" name="user_prompt" placeholder="Additional instructions for the model">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn-primary">Categorize</button>
+    <span class="processing-indicator" id="processingIndicator" style="display: none;">Processing...</span>
+  </div>
+</form>
+
+<div class="results" id="results" style="display: none;">
+  <div class="result-main">
+    <h2>Result</h2>
+    <pre class="result-output" id="resultOutput"></pre>
+  </div>
+
+  <div class="result-analysis" id="analysisSection" style="display: none;">
+    <h3>Analysis</h3>
+    <pre class="analysis-output" id="analysisOutput"></pre>
+  </div>
+
+  <div class="metadata-toggle-wrapper">
+    <button type="button" id="metadataToggle" class="btn-metadata">▼ Show Metadata</button>
+  </div>
+
+  <div class="metadata-panel" id="metadataPanel" style="display: none;">
+    <div class="metadata-grid">
+      <div class="metadata-item">
+        <span class="metadata-label">Tool:</span>
+        <span class="metadata-value" id="metaTool"></span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Processed by:</span>
+        <span class="metadata-value" id="metaProcessedBy"></span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Processed at:</span>
+        <span class="metadata-value" id="metaProcessedAt"></span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Execution time:</span>
+        <span class="metadata-value" id="metaExecutionTime"></span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Token usage:</span>
+        <span class="metadata-value" id="metaTokenUsage"></span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Completion tokens:</span>
+        <span class="metadata-value" id="metaCompletionTokens"></span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Analysis tokens:</span>
+        <span class="metadata-value" id="metaAnalysisTokens"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('advancedToggle').addEventListener('click', function() {
+    const panel = document.getElementById('advancedPanel');
+    if (panel.style.display === 'none') {
+      panel.style.display = 'block';
+      this.innerHTML = '▲ Hide Advanced Settings';
+    } else {
+      panel.style.display = 'none';
+      this.innerHTML = '▼ Advanced Settings';
+    }
+  });
+
+  const tempSlider = document.getElementById('temperature');
+  const tempSpan = document.getElementById('tempValue');
+  tempSlider.addEventListener('input', function() {
+    tempSpan.textContent = this.value;
+  });
+
+  document.getElementById('categorizeForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const submitBtn = this.querySelector('.btn-primary');
+    const processingIndicator = document.getElementById('processingIndicator');
+    submitBtn.disabled = true;
+    processingIndicator.style.display = 'inline';
+
+    const formData = new FormData(this);
+    const data = {
+      text: formData.get('text'),
+      categories: formData.get('categories').split(',').map(s => s.trim()),
+      with_analysis: formData.has('with_analysis'),
+      temperature: parseFloat(formData.get('temperature')) || 0.0
+    };
+    if (formData.get('user_prompt')) {
+      data.user_prompt = formData.get('user_prompt');
+    }
+
+    try {
+      const response = await fetch(this.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
+      const output = result.output;
+
+      document.getElementById('resultOutput').textContent = JSON.stringify(output.result, null, 2);
+
+      if (output.analysis) {
+        document.getElementById('analysisOutput').textContent = output.analysis;
+        document.getElementById('analysisSection').style.display = 'block';
+      } else {
+        document.getElementById('analysisSection').style.display = 'none';
+      }
+
+      const meta = output.metadata;
+      document.getElementById('metaTool').textContent = meta.tool_name || '—';
+      document.getElementById('metaProcessedBy').textContent = meta.processed_by || '—';
+      document.getElementById('metaProcessedAt').textContent = meta.processed_at ? new Date(meta.processed_at).toLocaleString() : '—';
+      document.getElementById('metaExecutionTime').textContent = meta.execution_time ? meta.execution_time.toFixed(3) + 's' : '—';
+      
+      if (meta.token_usage) {
+        const tu = meta.token_usage;
+        const completion = tu.completion_usage || {};
+        const analyze = tu.analyze_usage || {};
+        document.getElementById('metaTokenUsage').textContent = `Total: ${tu.total_tokens || 0}`;
+        document.getElementById('metaCompletionTokens').textContent = `Prompt: ${completion.prompt_tokens || 0}, Completion: ${completion.completion_tokens || 0}, Total: ${completion.total_tokens || 0}`;
+        document.getElementById('metaAnalysisTokens').textContent = `Prompt: ${analyze.prompt_tokens || 0}, Completion: ${analyze.completion_tokens || 0}, Total: ${analyze.total_tokens || 0}`;
+      } else {
+        document.getElementById('metaTokenUsage').textContent = '—';
+        document.getElementById('metaCompletionTokens').textContent = '—';
+        document.getElementById('metaAnalysisTokens').textContent = '—';
+      }
+
+      document.getElementById('results').style.display = 'block';
+    } catch (error) {
+      alert('An error occurred: ' + error.message);
+    } finally {
+      submitBtn.disabled = false;
+      processingIndicator.style.display = 'none';
+    }
+  });
+
+  document.getElementById('metadataToggle').addEventListener('click', function() {
+    const panel = document.getElementById('metadataPanel');
+    if (panel.style.display === 'none') {
+      panel.style.display = 'block';
+      this.innerHTML = '▲ Hide Metadata';
+    } else {
+      panel.style.display = 'none';
+      this.innerHTML = '▼ Show Metadata';
+    }
+  });
+</script>
+{% endblock %}
