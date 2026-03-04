@@ -1,3 +1,3 @@
 # TextTools App
 
-A simple API for TextTools
+A web app for TextTools
