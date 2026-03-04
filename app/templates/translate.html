@@ -1,22 +1,19 @@
-{% extends "base.html" %} {% block title %}Categorize - TextTools{% endblock %}
+{% extends "base.html" %} {% block title %}Translate - TextTools{% endblock %}
 {% block content %}
 <div class="tool-header">
-  <h1>Categorize Text</h1>
-  <p class="tool-description">
-    Classify your text into custom categories. Enter categories as a
-    comma-separated list.
-  </p>
+  <h1>Translate Text</h1>
+  <p class="tool-description">Translate text to a target language.</p>
 </div>
 
-<form class="tool-form" id="categorizeForm" method="POST" action="/tools/categorizations">
+<form class="tool-form" id="translateForm" method="POST" action="/tools/translations">
   <div class="form-group">
-    <label for="text">Text to categorize</label>
+    <label for="text">Input text</label>
     <textarea id="text" name="text" rows="6" placeholder="Enter your text here..." required></textarea>
   </div>
 
   <div class="form-group">
-    <label for="categories">Categories <span class="help-text">(comma-separated)</span></label>
-    <input type="text" id="categories" name="categories" placeholder="e.g., Technology, Sports, Health" required />
+    <label for="target_language">Target language</label>
+    <input type="text" id="target_language" name="target_language" placeholder="e.g., French, Spanish" required />
   </div>
 
   <div class="advanced-toggle-wrapper">
@@ -35,7 +32,6 @@
           </label>
         </div>
       </div>
-
       <div class="settings-box">
         <div class="slider-group">
           <label for="temperature">Temperature <span id="tempValue">0.0</span></label>
@@ -43,7 +39,6 @@
         </div>
       </div>
     </div>
-
     <div class="settings-box full-width">
       <div class="form-group">
         <label for="user_prompt">Custom prompt (optional)</label>
@@ -53,7 +48,7 @@
   </div>
 
   <div class="form-actions">
-    <button type="submit" class="btn-primary">Categorize</button>
+    <button type="submit" class="btn-primary">Translate</button>
     <span class="processing-indicator" id="processingIndicator" style="display: none">Processing...</span>
   </div>
 </form>
@@ -63,47 +58,38 @@
     <h2>Result</h2>
     <pre class="result-output" id="resultOutput"></pre>
   </div>
-
   <div class="result-analysis" id="analysisSection" style="display: none">
     <h3>Analysis</h3>
     <pre class="analysis-output" id="analysisOutput"></pre>
   </div>
-
   <div class="metadata-toggle-wrapper">
     <button type="button" id="metadataToggle" class="btn-metadata">
       ▼ Show Metadata
     </button>
   </div>
-
   <div class="metadata-panel" id="metadataPanel" style="display: none">
     <div class="metadata-grid">
       <div class="metadata-item">
-        <span class="metadata-label">Tool:</span>
-        <span class="metadata-value" id="metaTool"></span>
+        <span class="metadata-label">Tool:</span><span class="metadata-value" id="metaTool"></span>
       </div>
       <div class="metadata-item">
-        <span class="metadata-label">Processed by:</span>
-        <span class="metadata-value" id="metaProcessedBy"></span>
+        <span class="metadata-label">Processed by:</span><span class="metadata-value" id="metaProcessedBy"></span>
       </div>
       <div class="metadata-item">
-        <span class="metadata-label">Processed at:</span>
-        <span class="metadata-value" id="metaProcessedAt"></span>
+        <span class="metadata-label">Processed at:</span><span class="metadata-value" id="metaProcessedAt"></span>
       </div>
       <div class="metadata-item">
-        <span class="metadata-label">Execution time:</span>
-        <span class="metadata-value" id="metaExecutionTime"></span>
+        <span class="metadata-label">Execution time:</span><span class="metadata-value" id="metaExecutionTime"></span>
       </div>
       <div class="metadata-item">
-        <span class="metadata-label">Token usage:</span>
-        <span class="metadata-value" id="metaTokenUsage"></span>
+        <span class="metadata-label">Token usage:</span><span class="metadata-value" id="metaTokenUsage"></span>
       </div>
       <div class="metadata-item">
-        <span class="metadata-label">Completion tokens:</span>
-        <span class="metadata-value" id="metaCompletionTokens"></span>
+        <span class="metadata-label">Completion tokens:</span><span class="metadata-value"
+          id="metaCompletionTokens"></span>
       </div>
       <div class="metadata-item">
-        <span class="metadata-label">Analysis tokens:</span>
-        <span class="metadata-value" id="metaAnalysisTokens"></span>
+        <span class="metadata-label">Analysis tokens:</span><span class="metadata-value" id="metaAnalysisTokens"></span>
       </div>
     </div>
   </div>
@@ -130,7 +116,7 @@
   });
 
   document
-    .getElementById("categorizeForm")
+    .getElementById("translateForm")
     .addEventListener("submit", async function (e) {
       e.preventDefault();
       const submitBtn = this.querySelector(".btn-primary");
@@ -143,10 +129,7 @@
       const formData = new FormData(this);
       const data = {
         text: formData.get("text"),
-        categories: formData
-          .get("categories")
-          .split(",")
-          .map((s) => s.trim()),
+        target_language: formData.get("target_language"),
         with_analysis: formData.has("with_analysis"),
         temperature: parseFloat(formData.get("temperature")) || 0.0,
       };
@@ -162,13 +145,11 @@
         });
         const result = await response.json();
         const output = result.output;
-
         document.getElementById("resultOutput").textContent = JSON.stringify(
           output.result,
           null,
           2,
         );
-
         if (output.analysis) {
           document.getElementById("analysisOutput").textContent =
             output.analysis;
@@ -176,7 +157,6 @@
         } else {
           document.getElementById("analysisSection").style.display = "none";
         }
-
         const meta = output.metadata;
         document.getElementById("metaTool").textContent = meta.tool_name || "—";
         document.getElementById("metaProcessedBy").textContent =
@@ -187,7 +167,6 @@
             : "—";
         document.getElementById("metaExecutionTime").textContent =
           meta.execution_time ? meta.execution_time.toFixed(3) + "s" : "—";
-
         if (meta.token_usage) {
           const tu = meta.token_usage;
           const completion = tu.completion_usage || {};
@@ -203,7 +182,6 @@
           document.getElementById("metaCompletionTokens").textContent = "—";
           document.getElementById("metaAnalysisTokens").textContent = "—";
         }
-
         document.getElementById("results").style.display = "block";
       } catch (error) {
         alert("An error occurred: " + error.message);
