@@ -599,9 +599,9 @@ input[type="range"]::-moz-range-thumb:hover {
   background: linear-gradient(105deg, var(--btn-gradient-start), var(--btn-gradient-end));
   color: white;
   border: none;
-  padding: 1rem 2.5rem;
+  padding: 0.8rem 2rem;
   border-radius: 40px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.2s ease;
