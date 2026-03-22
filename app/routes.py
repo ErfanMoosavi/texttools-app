@@ -22,7 +22,9 @@ router = APIRouter(prefix="/tools", tags=["tools"])
 
 
 @router.post("/categorizations", response_model=ToolRes)
-async def categorize(req: CategorizeReq, tool: AsyncTheTool = Depends(get_tool)):
+async def categorize(
+    req: CategorizeReq, tool: AsyncTheTool = Depends(get_tool)
+) -> ToolRes:
     try:
         result = await tool.categorize(
             text=req.text,
@@ -41,7 +43,7 @@ async def categorize(req: CategorizeReq, tool: AsyncTheTool = Depends(get_tool))
 @router.post("/keyword-extractions", response_model=ToolRes)
 async def extract_keywords(
     req: ExtractKeywordsReq, tool: AsyncTheTool = Depends(get_tool)
-):
+) -> ToolRes:
     try:
         result = await tool.extract_keywords(
             text=req.text,
@@ -62,7 +64,7 @@ async def extract_keywords(
 @router.post("/entity-extractions", response_model=ToolRes)
 async def extract_entities(
     req: ExtractEntitiesReq, tool: AsyncTheTool = Depends(get_tool)
-):
+) -> ToolRes:
     try:
         result = await tool.extract_entities(
             text=req.text,
@@ -80,7 +82,9 @@ async def extract_entities(
 
 
 @router.post("/question-detections", response_model=ToolRes)
-async def is_question(req: IsQuestionReq, tool: AsyncTheTool = Depends(get_tool)):
+async def is_question(
+    req: IsQuestionReq, tool: AsyncTheTool = Depends(get_tool)
+) -> ToolRes:
     try:
         result = await tool.is_question(
             text=req.text,
@@ -96,7 +100,9 @@ async def is_question(req: IsQuestionReq, tool: AsyncTheTool = Depends(get_tool)
 
 
 @router.post("/question-generations", response_model=ToolRes)
-async def to_question(req: ToQuestionReq, tool: AsyncTheTool = Depends(get_tool)):
+async def to_question(
+    req: ToQuestionReq, tool: AsyncTheTool = Depends(get_tool)
+) -> ToolRes:
     try:
         result = await tool.to_question(
             text=req.text,
@@ -117,7 +123,7 @@ async def to_question(req: ToQuestionReq, tool: AsyncTheTool = Depends(get_tool)
 @router.post("/question-merges", response_model=ToolRes)
 async def merge_questions(
     req: MergeQuestionsReq, tool: AsyncTheTool = Depends(get_tool)
-):
+) -> ToolRes:
     try:
         result = await tool.merge_questions(
             text=req.text,
@@ -135,7 +141,7 @@ async def merge_questions(
 
 
 @router.post("/augmentations", response_model=ToolRes)
-async def augment(req: AugmentReq, tool: AsyncTheTool = Depends(get_tool)):
+async def augment(req: AugmentReq, tool: AsyncTheTool = Depends(get_tool)) -> ToolRes:
     try:
         result = await tool.augment(
             text=req.text,
@@ -153,7 +159,9 @@ async def augment(req: AugmentReq, tool: AsyncTheTool = Depends(get_tool)):
 
 
 @router.post("/summaries", response_model=ToolRes)
-async def summarize(req: SummarizeReq, tool: AsyncTheTool = Depends(get_tool)):
+async def summarize(
+    req: SummarizeReq, tool: AsyncTheTool = Depends(get_tool)
+) -> ToolRes:
     try:
         result = await tool.summarize(
             text=req.text,
@@ -170,7 +178,9 @@ async def summarize(req: SummarizeReq, tool: AsyncTheTool = Depends(get_tool)):
 
 
 @router.post("/translations", response_model=ToolRes)
-async def translate(req: TranslateReq, tool: AsyncTheTool = Depends(get_tool)):
+async def translate(
+    req: TranslateReq, tool: AsyncTheTool = Depends(get_tool)
+) -> ToolRes:
     try:
         result = await tool.translate(
             text=req.text,
@@ -191,7 +201,7 @@ async def translate(req: TranslateReq, tool: AsyncTheTool = Depends(get_tool)):
 @router.post("/propositions", response_model=ToolRes)
 async def propositionize(
     req: PropositionizeReq, tool: AsyncTheTool = Depends(get_tool)
-):
+) -> ToolRes:
     try:
         result = await tool.propositionize(
             text=req.text,
@@ -208,7 +218,7 @@ async def propositionize(
 
 
 @router.post("/fact-checks", response_model=ToolRes)
-async def is_fact(req: IsFactReq, tool: AsyncTheTool = Depends(get_tool)):
+async def is_fact(req: IsFactReq, tool: AsyncTheTool = Depends(get_tool)) -> ToolRes:
     try:
         result = await tool.is_fact(
             text=req.text,
